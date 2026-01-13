@@ -1,0 +1,12 @@
+### Default test
+GET http://localhost:8080/
+
+### Echo test
+POST http://localhost:8080/echo
+Content-Type: application/json
+
+{
+  "message": "hello",
+  "count": 5,
+  "source": "benchmark"
+}

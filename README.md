@@ -1,14 +1,14 @@
 # Spring Boot AOT&JIT Benchmarks
 
 Benchmark project to compare JIT (JAR) vs AOT (native image) with Spring Boot.
-We measure:
+We measure (*TODO*):
 
-- Compilation time
 - Startup time
 - Memory footprint
 - Artifact size
+- Compilation time (secondary)
 
-Tested with Maven (wrapper), JVM/GraalVM 21+.
+Tested with Maven (wrapper), JVM/GraalVM 25+.
 
 ## JIT compilation
 
@@ -68,7 +68,7 @@ More [GraalVM Native image](https://docs.spring.io/spring-boot/how-to/native-ima
 
 Run both builds (.jar and native)
 
-📊 Measure:
+📊 Measure (*TODO*):
 
 - Build time → taken from Maven’s own build output (e.g., [INFO] BUILD SUCCESS in _ s).
 - Startup time → taken from Spring’s startup log (e.g., Spring Boot started in _ s).
