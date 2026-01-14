@@ -1,0 +1,97 @@
+# =========================
+# IDEs
+# =========================
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+.vscode/
+*.code-workspace
+
+# =========================
+# OS / Editor noise
+# =========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*.tmp
+*.log
+
+# =========================
+# Maven
+# =========================
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+
+# =========================
+# Gradle (if ever used)
+# =========================
+
+.gradle/
+build/
+
+# =========================
+# Java
+# =========================
+
+*.class
+*.jar
+*.war
+*.ear
+
+# Keep wrapper scripts
+!/mvnw
+!/mvnw.cmd
+!/.mvn/
+
+# =========================
+# Quarkus
+# =========================
+
+# Native image output
+*-runner
+*-runner.exe
+
+# Quarkus build metadata
+.quarkus/
+quarkus-artifact.properties
+
+# =========================
+# Spring Boot
+# =========================
+
+# Spring Boot dev tools
+.springBeans
+
+# =========================
+# Test / Coverage
+# =========================
+
+surefire-reports/
+failsafe-reports/
+jacoco.exec
+jacoco/
+coverage/
+
+# =========================
+# Environment / secrets
+# =========================
+
+.env
+.env.*
+*.pem
+*.key
+*.crt
+
+# =========================
+# Logs
+# =========================
+
+logs/
