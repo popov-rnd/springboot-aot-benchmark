@@ -3,7 +3,7 @@ spring:
   name: spring-aot-benchmark
  threads:
    virtual:
-    enabled: false
+    enabled: ${VT_enabled:false}
 server:
  port: 8080
 logging:
