@@ -10,3 +10,32 @@ Content-Type: application/json
   "count": 5,
   "source": "benchmark"
 }
+
+
+### Echo 300 test
+POST http://localhost:8080/echo-300
+Content-Type: application/json
+
+{
+  "deviceId": "sensor-eb3d0a1b",
+  "timestamp": 1700000000000,
+  "firmware": "1.8.19",
+  "location": {
+    "lat": 51.5596,
+    "lon": 29.9987,
+    "alt": 228.4
+  },
+  "metrics": {
+    "temperature": 33.07,
+    "humidity": 55.8,
+    "pressure": 986.35,
+    "vibration": 0.007,
+    "battery": 95.5
+  },
+  "status": {
+    "online": true,
+    "signalStrength": -46,
+    "errorCode": 0
+  },
+  "tags": ["zone-a", "floor-3", "lighting"]
+}
