@@ -1,5 +1,0 @@
-spring:
- application:
-  name: spring-aot-benchmark
-server:
- port: 8080

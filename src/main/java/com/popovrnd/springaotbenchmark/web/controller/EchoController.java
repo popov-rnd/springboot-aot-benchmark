@@ -19,6 +19,7 @@ public class EchoController {
     @PostMapping
     public EchoRequest echo(@Valid @RequestBody EchoRequest request) {
         log.info("Echo controller with payload = {}", request);
+        //log.info("Thread = {}", Thread.currentThread());
         return request;
     }
 }
