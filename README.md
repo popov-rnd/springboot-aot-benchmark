@@ -44,7 +44,9 @@ Build an OCI image via Buildpacks (recommended for most cases)
 Spring Boot Maven plugin can build an OCI image directly from your jar using Cloud Native Buildpacks:
 
 ```
-./mvnw spring-boot:build-image
+./mvnw spring-boot:build-image \
+  -Dspring-boot.build-image.imageName=spring-aot-benchmark:jvm \
+  -Dspring-boot.build-image.environment.BP_NATIVE_IMAGE=false
 ```
 
 This runs the Maven package lifecycle and produces an image without you writing a Dockerfile.
@@ -89,7 +91,9 @@ You can then execute your native executable with:
 Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
 
 ```shell script
-./mvnw -Pnative spring-boot:build-image
+./mvnw -Pnative spring-boot:build-image \
+  -Dspring-boot.build-image.imageName=spring-aot-benchmark:native \
+  -Dspring-boot.build-image.environment.BP_NATIVE_IMAGE=true
 ```
 
 This will produce docker image in your local Docker registry
