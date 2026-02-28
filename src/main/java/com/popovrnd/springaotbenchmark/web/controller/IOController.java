@@ -2,16 +2,12 @@ package com.popovrnd.springaotbenchmark.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import org.springframework.web.client.RestClient;
 
 
 @RestController
@@ -21,27 +17,24 @@ public class IOController {
     private static final Logger log =
             LoggerFactory.getLogger(IOController.class);
 
-    // Reuse client (important for performance)
-    private static final HttpClient CLIENT = HttpClient.newHttpClient();
+    private static final String WAITING_URI = "http://127.0.0.1:8081/waiting";
 
-    private static final URI WAITING_URI = URI.create("http://127.0.0.1:8081/waiting");
+    // Reuse one client
+    private static final RestClient CLIENT = RestClient.create();
 
     @GetMapping
-    public ResponseEntity<Void> getBlocking() throws IOException, InterruptedException {
+    public ResponseEntity<Void> getBlocking() {
 
-        //log.info("IO is called!");
+        //log.info("IO is called! Thread = {}", Thread.currentThread());
 
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpStatusCode status = CLIENT.get()
                 .uri(WAITING_URI)
-                .GET()
-                .build();
+                .retrieve()
+                .toBodilessEntity()
+                .getStatusCode();
 
-        HttpResponse<Void> response =
-                CLIENT.send(request, HttpResponse.BodyHandlers.discarding());
-
-        if (response.statusCode() != 200) {
-            return ResponseEntity.internalServerError().build();
-        }
-        return ResponseEntity.ok().build();
+        return status.is2xxSuccessful()
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.internalServerError().build();
     }
 }
