@@ -1,6 +1,9 @@
 ### Default test
 GET http://localhost:8080/
 
+### IO test
+GET http://localhost:8080/io
+
 ### Echo test
 POST http://localhost:8080/echo
 Content-Type: application/json
