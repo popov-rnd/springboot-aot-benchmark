@@ -3,12 +3,12 @@ spring:
   name: spring-aot-benchmark
  threads:
    virtual:
-    enabled: ${VT_enabled:true}
+    enabled: ${VT_enabled:false}
 server:
  port: 8080
  tomcat:
   threads:
-   max: 200
+   max: 400
 logging:
  level:
   root: ${LOG_LEVEL_ROOT:INFO}

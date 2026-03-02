@@ -1,5 +1,6 @@
 package com.popovrnd.springaotbenchmark.web.controller;
 
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -41,18 +42,22 @@ public class IOController {
                 : ResponseEntity.internalServerError().build();
     }*/
 
-    // Single reusable client (transport-neutral baseline)
-    private static final HttpClient CLIENT =
-            HttpClient.newBuilder()
-                    .version(HttpClient.Version.HTTP_1_1)
-                    .build();
+    private HttpClient client;
 
-    // Reusable immutable request
-    private static final HttpRequest REQUEST =
-            HttpRequest.newBuilder()
-                    .uri(URI.create(WAITING_URI))
-                    .GET()
-                    .build();
+    private HttpRequest request;
+
+    @PostConstruct
+    void init() {
+        client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .build();
+        request =
+                HttpRequest.newBuilder()
+                        .uri(URI.create( "http://127.0.0.1:8081/waiting"))
+                        .GET()
+                        .build();
+
+    }
 
     @GetMapping
     public ResponseEntity<Void> getBlocking() throws Exception {
@@ -60,7 +65,7 @@ public class IOController {
         //log.info("IO is called! Thread = {}", Thread.currentThread());
 
         HttpResponse<Void> response =
-                CLIENT.send(REQUEST, HttpResponse.BodyHandlers.discarding());
+                client.send(request, HttpResponse.BodyHandlers.discarding());
 
         return response.statusCode() >= 200 && response.statusCode() < 300
                 ? ResponseEntity.ok().build()
