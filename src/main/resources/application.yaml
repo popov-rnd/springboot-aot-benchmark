@@ -6,6 +6,9 @@ spring:
     enabled: ${VT_enabled:true}
 server:
  port: 8080
+ tomcat:
+  threads:
+   max: 200
 logging:
  level:
   root: ${LOG_LEVEL_ROOT:INFO}
