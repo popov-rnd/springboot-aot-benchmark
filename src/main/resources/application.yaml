@@ -1,15 +1,15 @@
 spring:
- application:
-  name: spring-aot-benchmark
- threads:
-   virtual:
-    enabled: ${VT_enabled:true}
+  application:
+    name: spring-aot-benchmark
+  threads:
+    virtual:
+      enabled: ${VT_enabled:true}
 server:
- port: 8080
- #tomcat:
-  #threads:
-   #max: 400
+  port: 8080
+    #tomcat:
+    #threads:
+  #max: 400
 logging:
- level:
-  root: ${LOG_LEVEL_ROOT:INFO}
-  com.popovrnd.springaotbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.popovrnd.springaotbenchmark: ${LOG_LEVEL_BENCHMARK:INFO}

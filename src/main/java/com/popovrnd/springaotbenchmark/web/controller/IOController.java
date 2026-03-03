@@ -23,10 +23,25 @@ public class IOController {
     private static final Logger log =
             LoggerFactory.getLogger(IOController.class);
 
-    private static final String WAITING_URI = "http://127.0.0.1:8081/waiting";
+    private final DelayedClient delayedClient;
+
+    public IOController(DelayedClient delayedClient) {
+        this.delayedClient = delayedClient;
+    }
+
+    @GetMapping
+    public void getBlocking() {
+
+        //log.info("IO is called! Thread = {}", Thread.currentThread());
+
+        delayedClient.getDelayed();
+    }
+
+
+    //private static final String WAITING_URI = "http://127.0.0.1:8081/waiting";
 
     // Reuse one client
-    private static final RestClient CLIENT = RestClient.create();
+    //private static final RestClient CLIENT = RestClient.create();
 
     /*@GetMapping
     public ResponseEntity<Void> getBlocking() {
@@ -44,7 +59,7 @@ public class IOController {
                 : ResponseEntity.internalServerError().build();
     }*/
 
-    @GetMapping
+    /*@GetMapping
     public void getBlocking(HttpServletResponse response) {
 
         //log.info("IO is called! Thread = {}", Thread.currentThread());
@@ -54,7 +69,7 @@ public class IOController {
                 .exchange((req, res) -> res.getStatusCode().value());
 
         response.setStatus(status);
-    }
+    }*/
 
     /*private HttpClient client;
 
