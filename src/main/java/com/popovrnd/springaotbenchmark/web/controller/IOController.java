@@ -32,7 +32,7 @@ public class IOController {
     @GetMapping
     public void getBlocking() {
 
-        log.info("IO is called! Thread = {}", Thread.currentThread());
+        //log.info("IO is called! Thread = {}", Thread.currentThread());
 
         delayedClient.getDelayed();
     }

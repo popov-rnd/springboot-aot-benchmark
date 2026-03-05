@@ -4,39 +4,48 @@ import com.popovrnd.springaotbenchmark.web.controller.DelayedClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.service.registry.ImportHttpServices;
+import org.springframework.web.client.support.RestClientAdapter;
+import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
-@ImportHttpServices(basePackageClasses = DelayedClient.class)
+//@ImportHttpServices(basePackageClasses = DelayedClient.class)
 public class RestConfig {
 
+
     @Bean
-    public CloseableHttpClient apacheHttpClient() {
+    RestClient restClient() {
 
         PoolingHttpClientConnectionManager cm =
-                new PoolingHttpClientConnectionManager();
+                PoolingHttpClientConnectionManagerBuilder.create()
+                        .setMaxConnTotal(10000)
+                        .setMaxConnPerRoute(1000)
+                        .build();
 
-        cm.setMaxTotal(10000);
-        cm.setDefaultMaxPerRoute(10000);
-
-        return HttpClients.custom()
-                .setConnectionManager(cm)
-                .disableAutomaticRetries()
-                .build();
-    }
-
-    @Bean
-    public RestClient restClient(CloseableHttpClient apacheHttpClient) {
+        CloseableHttpClient httpClient =
+                HttpClients.custom()
+                        .setConnectionManager(cm)
+                        .build();
 
         HttpComponentsClientHttpRequestFactory factory =
-                new HttpComponentsClientHttpRequestFactory(apacheHttpClient);
+                new HttpComponentsClientHttpRequestFactory(httpClient);
 
         return RestClient.builder()
                 .requestFactory(factory)
                 .build();
+    }
+
+    @Bean
+    DelayedClient delayedClient(RestClient restClient) {
+
+        HttpServiceProxyFactory factory =
+                HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient))
+                        .build();
+
+        return factory.createClient(DelayedClient.class);
     }
 }
