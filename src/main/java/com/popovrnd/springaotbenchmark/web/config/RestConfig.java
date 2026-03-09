@@ -13,12 +13,10 @@ import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
-//@ImportHttpServices(basePackageClasses = DelayedClient.class)
 public class RestConfig {
 
-
     @Bean
-    RestClient restClient() {
+    public RestClient restClient() {
 
         PoolingHttpClientConnectionManager cm =
                 PoolingHttpClientConnectionManagerBuilder.create()
@@ -40,7 +38,7 @@ public class RestConfig {
     }
 
     @Bean
-    DelayedClient delayedClient(RestClient restClient) {
+    public DelayedClient delayedClient(RestClient restClient) {
 
         HttpServiceProxyFactory factory =
                 HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient))

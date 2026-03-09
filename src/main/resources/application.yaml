@@ -8,8 +8,8 @@ server:
   port: 8080
     #tomcat:
     #threads:
-  #max: 400
+  #max: 600
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
-    com.popovrnd.springaotbenchmark: ${LOG_LEVEL_BENCHMARK:INFO}
+    com.popovrnd.springaotbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
