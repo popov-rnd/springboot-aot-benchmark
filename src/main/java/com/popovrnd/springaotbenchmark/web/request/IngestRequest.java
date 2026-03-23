@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import java.util.List;
 
-public record EchoRequest300(
+public record IngestRequest(
 
         @NotBlank
         String deviceId,

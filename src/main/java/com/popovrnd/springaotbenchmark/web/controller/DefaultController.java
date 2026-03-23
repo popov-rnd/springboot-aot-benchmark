@@ -17,7 +17,7 @@ public class DefaultController {
 
     @GetMapping
     public ResponseEntity<Void> get() {
-        log.info("Default is called!");
+        //log.info("Default is called!");
         return ResponseEntity.ok().build();
     }
 }

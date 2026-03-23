@@ -4,19 +4,9 @@ GET http://localhost:8080/
 ### IO test
 GET http://localhost:8080/io
 
-### Echo test
-POST http://localhost:8080/echo
-Content-Type: application/json
 
-{
-  "message": "hello",
-  "count": 5,
-  "source": "benchmark"
-}
-
-
-### Echo 300 test
-POST http://localhost:8080/echo-300
+### Ingest test (~300B payload)
+POST http://localhost:8080/ingest
 Content-Type: application/json
 
 {
