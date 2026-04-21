@@ -3,12 +3,17 @@ spring:
     name: spring-aot-benchmark
   threads:
     virtual:
-      enabled: ${VT_enabled:false}
+      enabled: ${VT_ENABLED:true}
 server:
   port: 8080
-    #tomcat:
-    #threads:
-  #max: 600
+  tomcat:
+    threads:
+      max: ${MAX_THREADS:200}
+
+concurrency:
+  max: ${MAX_CONCURRENCY:200}
+  semaphore: ${USE_SEMAPHORE:false}
+
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:WARN}

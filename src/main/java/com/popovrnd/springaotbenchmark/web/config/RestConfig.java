@@ -1,5 +1,6 @@
 package com.popovrnd.springaotbenchmark.web.config;
 
+import com.popovrnd.springaotbenchmark.web.controller.ConcurrencyProperties;
 import com.popovrnd.springaotbenchmark.web.controller.DelayedClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -11,19 +12,17 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-import org.springframework.web.service.registry.ImportHttpServices;
 
 @Configuration
-//@ImportHttpServices(DelayedClient.class)
 public class RestConfig {
 
    @Bean
-    public RestClient restClient() {
+    public RestClient restClient(ConcurrencyProperties props) {
 
         PoolingHttpClientConnectionManager cm =
                 PoolingHttpClientConnectionManagerBuilder.create()
-                        .setMaxConnTotal(10000)
-                        .setMaxConnPerRoute(1000)
+                        .setMaxConnTotal(props.max())
+                        .setMaxConnPerRoute(props.max())
                         .build();
 
         CloseableHttpClient httpClient =
