@@ -1,43 +1,16 @@
 package com.popovrnd.springaotbenchmark.web.controller;
 
+import org.springframework.resilience.annotation.ConcurrencyLimit;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.Semaphore;
 
 @Service
 public class DelayedService {
 
-    private final Semaphore semaphore;
-
-    private final boolean useSemaphore;
-
-    public DelayedService(ConcurrencyProperties props) {
-        this.useSemaphore = props.semaphore();
-        this.semaphore = new Semaphore(props.max());
-    }
-
+    @ConcurrencyLimit(
+            limitString = "${concurrency.max}",
+            policy = ConcurrencyLimit.ThrottlePolicy.REJECT
+    )
     public void callBlocking(Runnable action) {
-
-        if (!useSemaphore) {
-            action.run();
-            return;
-        }
-
-        boolean acquired = false;
-
-        try {
-            semaphore.acquire();
-            acquired = true;
-
-            action.run();
-
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException("Interrupted while acquiring semaphore", e);
-        } finally {
-            if (acquired) {
-                semaphore.release();
-            }
-        }
+        action.run();
     }
 }

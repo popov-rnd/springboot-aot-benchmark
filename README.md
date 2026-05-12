@@ -1,13 +1,6 @@
 # Spring Boot AOT&JIT Benchmarks
 
-Benchmark project to compare JIT (JAR) vs AOT (native image) with Spring Boot.
-
-We measure such *static* metrics:
-
-- Startup time;
-- Memory footprint;
-- Artifact size;
-- Compilation time (secondary).
+Benchmark project to compare VT vs PT in JVM and native modes with Spring Boot.
 
 We measure such *dynamic* metrics:
 
@@ -45,7 +38,7 @@ Spring Boot Maven plugin can build an OCI image directly from your jar using Clo
 
 ```
 ./mvnw spring-boot:build-image \
-  -Dspring-boot.build-image.imageName=spring-aot-benchmark:jvm \
+  -Dspring-boot.build-image.imageName=spring-benchmark:jvm-io-new \
   -Dspring-boot.build-image.environment.BP_NATIVE_IMAGE=false
 ```
 
@@ -86,13 +79,13 @@ This command requires GraalVM to be installed locally and set default.
 ```
 You can then execute your native executable with:
 
-`./target/spring-aot-benchmark`
+`./target/spring-benchmark`
 
 Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
 
 ```shell script
 ./mvnw -Pnative spring-boot:build-image \
-  -Dspring-boot.build-image.imageName=spring-aot-benchmark:native \
+  -Dspring-boot.build-image.imageName=spring-benchmark:native-io \
   -Dspring-boot.build-image.environment.BP_NATIVE_IMAGE=true
 ```
 
@@ -100,18 +93,6 @@ This will produce docker image in your local Docker registry
 
 You can then run your docker image with:
 
-`docker run -it spring-aot-benchmark:0.0.1-SNAPSHOT`
+`docker run -it spring-benchmark:0.0.1-SNAPSHOT`
 
 More [GraalVM Native image](https://docs.spring.io/spring-boot/how-to/native-image/developing-your-first-application.html)
-
-
-## Running Benchmarks
-
-Run both builds (.jar and native)
-
-📊 Measure (*TODO*):
-
-- Build time → taken from Maven’s own build output (e.g., [INFO] BUILD SUCCESS in _ s).
-- Startup time → taken from Spring’s startup log (e.g., Spring Boot started in _ s).
-- Memory usage → from ps after startup, Processes tab in Linux Mint’s System Monitor is essentially a GUI wrapper around what commands like ps and top show in the terminal.
-- Artifact size → from ls -lh or direct filesystem metadata.

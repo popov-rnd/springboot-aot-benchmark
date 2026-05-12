@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spring-aot-benchmark
+    name: spring-benchmark
   threads:
     virtual:
       enabled: ${VT_ENABLED:true}
@@ -9,12 +9,18 @@ server:
   tomcat:
     threads:
       max: ${MAX_THREADS:200}
+    max-connections: ${TOMCAT_MAX_CONNECTIONS:8192}
 
 concurrency:
-  max: ${MAX_CONCURRENCY:200}
-  semaphore: ${USE_SEMAPHORE:false}
+  max: ${MAX_CONCURRENCY:-1}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
 
 logging:
   level:
-    root: ${LOG_LEVEL_ROOT:WARN}
+    root: ${LOG_LEVEL_ROOT:INFO}
     com.popovrnd.springaotbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
