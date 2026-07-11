@@ -3,18 +3,24 @@ spring:
     name: spring-benchmark
   threads:
     virtual:
-      enabled: ${VT_ENABLED:false}
+      enabled: ${VT_ENABLED:true}
 server:
   port: 8080
   tomcat:
     accept-count: ${ACCEPT_COUNT:100}
     max-connections: ${MAX_CONNECTIONS:8192}
-    threads:
-      max: ${MAX_THREADS:200}
-      max-queue-capacity: ${MAX_QUEUE_SIZE:2147483647}
+    #threads:
+      #max: ${MAX_THREADS:200}
+      #max-queue-capacity: ${MAX_QUEUE_SIZE:2147483647}
 
 
 concurrency:
+  global: ${GLOBAL_CONCURRENCY:200}
+  locals:
+    path1: ${PATH1_CONCURRENCY:-1}
+    path2: ${PATH2_CONCURRENCY:80}
+    path3: ${PATH3_CONCURRENCY:20}
+
   max: ${MAX_CONCURRENCY:0}
   semaphore: ${SEMAPHORE:true}
 
@@ -27,4 +33,4 @@ management:
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
-    com.popovrnd.springaotbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
+    com.popovrnd.springbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
