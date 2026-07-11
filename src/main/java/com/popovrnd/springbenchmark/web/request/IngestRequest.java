@@ -1,4 +1,4 @@
-package com.popovrnd.springaotbenchmark.web.request;
+package com.popovrnd.springbenchmark.web.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;

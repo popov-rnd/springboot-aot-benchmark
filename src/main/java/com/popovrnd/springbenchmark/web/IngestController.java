@@ -1,6 +1,6 @@
-package com.popovrnd.springaotbenchmark.web.controller;
+package com.popovrnd.springbenchmark.web;
 
-import com.popovrnd.springaotbenchmark.web.request.IngestRequest;
+import com.popovrnd.springbenchmark.web.request.IngestRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +20,6 @@ public class IngestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(path="/ingest", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void ingest(@Valid @RequestBody IngestRequest request) {
-        //log.info("Ingest controller, thread = {}", Thread.currentThread());
+        log.info("Ingest controller, thread = {}, request = {}", Thread.currentThread(), request);
     }
 }

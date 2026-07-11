@@ -1,4 +1,4 @@
-package com.popovrnd.springaotbenchmark.web.controller;
+package com.popovrnd.springbenchmark.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

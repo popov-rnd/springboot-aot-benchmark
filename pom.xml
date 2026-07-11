@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.5</version>
+        <version>4.1.0</version>
         <relativePath/>
     </parent>
     <groupId>com.popovrnd</groupId>
-    <artifactId>spring-aot-benchmark</artifactId>
+    <artifactId>spring-benchmark</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-native-demo</name>
-    <description>spring-aot-benchmark</description>
+    <name>spring-demo</name>
+    <description>spring-benchmark</description>
     <url/>
     <licenses>
         <license/>
@@ -41,8 +41,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
         <dependency>

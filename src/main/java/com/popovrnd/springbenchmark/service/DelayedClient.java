@@ -1,4 +1,4 @@
-package com.popovrnd.springaotbenchmark.web.controller;
+package com.popovrnd.springbenchmark.service;
 
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;

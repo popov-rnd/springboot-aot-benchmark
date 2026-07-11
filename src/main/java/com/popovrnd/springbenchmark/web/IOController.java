@@ -1,5 +1,7 @@
-package com.popovrnd.springaotbenchmark.web.controller;
+package com.popovrnd.springbenchmark.web;
 
+import com.popovrnd.springbenchmark.service.DelayedClient;
+import com.popovrnd.springbenchmark.service.DelayedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

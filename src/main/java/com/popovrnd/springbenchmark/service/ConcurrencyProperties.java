@@ -1,4 +1,4 @@
-package com.popovrnd.springaotbenchmark.web.controller;
+package com.popovrnd.springbenchmark.service;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -8,7 +8,7 @@ public record ConcurrencyProperties(
         boolean semaphore) {
 
     public ConcurrencyProperties {
-        if (max <= 0) {
+        if (max < 0) {
             throw new IllegalArgumentException("Max concurrency must be > 0");
         }
     }
