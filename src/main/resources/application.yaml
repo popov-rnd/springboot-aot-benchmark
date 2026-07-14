@@ -13,16 +13,12 @@ server:
       #max: ${MAX_THREADS:200}
       #max-queue-capacity: ${MAX_QUEUE_SIZE:2147483647}
 
-
 concurrency:
   global: ${GLOBAL_CONCURRENCY:200}
   locals:
-    path1: ${PATH1_CONCURRENCY:-1}
+    path1: ${PATH1_CONCURRENCY:100}
     path2: ${PATH2_CONCURRENCY:80}
     path3: ${PATH3_CONCURRENCY:20}
-
-  max: ${MAX_CONCURRENCY:0}
-  semaphore: ${SEMAPHORE:true}
 
 management:
   endpoints:
