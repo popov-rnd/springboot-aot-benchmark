@@ -9,9 +9,6 @@ server:
   tomcat:
     accept-count: ${ACCEPT_COUNT:100}
     max-connections: ${MAX_CONNECTIONS:8192}
-    #threads:
-      #max: ${MAX_THREADS:200}
-      #max-queue-capacity: ${MAX_QUEUE_SIZE:2147483647}
 
 concurrency:
   global: ${GLOBAL_CONCURRENCY:200}

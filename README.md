@@ -4,9 +4,9 @@ This repository is a small Spring Boot application for testing concurrency-based
 
 ## Load-shedding levels
 
-- **Global (`N_G`)**: a Tomcat `SemaphoreValve` limits total concurrent requests. The limit is configured by `GLOBAL_CONCURRENCY` (default: `200`). Requests above it are rejected immediately with HTTP `503`.
-- **Local, servlet filter**: `/path1`, `/path2`, and `/path3` use independent non-blocking semaphore filters. Their limits are `PATH1_CONCURRENCY=100`, `PATH2_CONCURRENCY=80`, and `PATH3_CONCURRENCY=20` by default. Excess requests receive HTTP `503`.
-- **Local, Spring `@ConcurrencyLimit`**: `/path4` uses `@ConcurrencyLimit(limit = 5, policy = REJECT)`. Invocations above the limit are mapped to HTTP `503`.
+- **Global (N<sub>G</sub>)**: a Tomcat `SemaphoreValve` limits total concurrent requests. The limit is configured by `GLOBAL_CONCURRENCY` (default: `200`). Requests above it are rejected immediately with HTTP `503`.
+- **Local(N<sub>i</sub>), servlet filter**: `/path1`, `/path2`, and `/path3` use independent non-blocking semaphore filters. Their limits are `PATH1_CONCURRENCY=100`, `PATH2_CONCURRENCY=80`, and `PATH3_CONCURRENCY=20` by default. Excess requests receive HTTP `503`.
+- **Local (N<sub>i</sub>), Spring `@ConcurrencyLimit`**: `/path4` uses `@ConcurrencyLimit(limit = 5, policy = REJECT)`. Invocations above the limit are mapped to HTTP `503`.
 
 ## Build and run
 
