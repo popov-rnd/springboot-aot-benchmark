@@ -3,18 +3,17 @@ spring:
     name: spring-benchmark
   threads:
     virtual:
-      enabled: ${VT_ENABLED:true}
+      enabled: ${VT_ENABLED:false}
 server:
   port: 8080
   tomcat:
     accept-count: ${ACCEPT_COUNT:100}
     max-connections: ${MAX_CONNECTIONS:8192}
-    #threads:
-      #max: ${MAX_THREADS:200}
-      #max-queue-capacity: ${MAX_QUEUE_SIZE:2147483647}
+    threads:
+      max: ${GLOBAL_CONCURRENCY:200}
+      max-queue-capacity: ${MAX_QUEUE_SIZE:1}
 
 concurrency:
-  global: ${GLOBAL_CONCURRENCY:200}
   locals:
     path1: ${PATH1_CONCURRENCY:100}
     path2: ${PATH2_CONCURRENCY:80}
