@@ -1,5 +1,2 @@
-### Default test
-GET http://localhost:8080/
-
-### Path1 test
+### Critical path test
 GET http://localhost:8080/critical
