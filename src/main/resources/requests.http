@@ -2,4 +2,4 @@
 GET http://localhost:8080/
 
 ### Path1 test
-GET http://localhost:8080/path1
+GET http://localhost:8080/critical

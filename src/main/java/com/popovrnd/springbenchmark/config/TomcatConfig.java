@@ -16,7 +16,7 @@ public class TomcatConfig {
         return factory -> factory.addContextCustomizers(context -> {
             var valve = new SemaphoreValve();
 
-            valve.setConcurrency(properties.global());
+            valve.setConcurrency(properties.target());
             valve.setBlock(false);
             valve.setHighConcurrencyStatus(503);
 
