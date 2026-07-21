@@ -4,6 +4,7 @@ import com.popovrnd.springbenchmark.service.ExternalClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.resilience.annotation.ConcurrencyLimit;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +28,7 @@ public class HighLoadController {
 
     @GetMapping("critical")
     @ResponseStatus(HttpStatus.OK)
+    @ConcurrencyLimit(limitString = "${concurrency.target}", policy = ConcurrencyLimit.ThrottlePolicy.REJECT)
     public void criticalPath() {
         externalClient.getDelayed();
     }
