@@ -25,7 +25,7 @@ public class HttpClientConfig {
     HttpClient jdkHttpClient(ExecutorService httpClientExecutor) {
         return HttpClient.newBuilder()
                 .executor(httpClientExecutor)
-                .connectTimeout(Duration.ofSeconds(2))
+                .connectTimeout(Duration.ofMillis(500))
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
     }
@@ -33,7 +33,7 @@ public class HttpClientConfig {
     @Bean
     JdkClientHttpRequestFactory jdkClientHttpRequestFactory(HttpClient httpClient) {
         var requestFactory = new JdkClientHttpRequestFactory(httpClient);
-        requestFactory.setReadTimeout(Duration.ofSeconds(2));
+        requestFactory.setReadTimeout(Duration.ofSeconds(1));
         return requestFactory;
     }
 

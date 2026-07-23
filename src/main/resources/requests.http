@@ -1,2 +1,5 @@
 ### Critical path test
 GET http://localhost:8080/critical
+
+### Downstream path test
+GET http://localhost:8081/delay
