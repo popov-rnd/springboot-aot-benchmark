@@ -7,7 +7,7 @@ import org.springframework.web.service.annotation.HttpExchange;
 @HttpExchange(url = "http://127.0.0.1:8081")
 public interface ExternalClient {
 
-    @GetExchange("/delayed")
+    @GetExchange("/delay")
     void getDelayed();
 
 }

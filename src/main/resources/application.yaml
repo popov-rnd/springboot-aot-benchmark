@@ -11,7 +11,7 @@ server:
     max-connections: ${MAX_CONNECTIONS:8192}
 
 concurrency:
-  target: ${TARGET_CONCURRENCY:1000}
+  target: ${TARGET_CONCURRENCY:2000}
 
 management:
   endpoints:
@@ -22,4 +22,4 @@ management:
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
-    com.popovrnd.springbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
+    com.popovrnd.springbenchmark: ${LOG_LEVEL_BENCHMARK:ERROR}
