@@ -89,7 +89,7 @@ Spring Boot Maven plugin can build an OCI image directly from your jar using Clo
 
 ```
 ./mvnw spring-boot:build-image \
-  -Dspring-boot.build-image.imageName=spring-load-shedding:server-custom \
+  -Dspring-boot.build-image.imageName=spring-load-shedding:server \
   -Dspring-boot.build-image.environment.BP_NATIVE_IMAGE=false
 ```
 
