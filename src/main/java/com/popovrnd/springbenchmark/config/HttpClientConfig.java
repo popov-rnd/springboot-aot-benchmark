@@ -6,7 +6,6 @@ import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.support.RestClientHttpServiceGroupConfigurer;
 
 import java.net.http.HttpClient;
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,18 +21,22 @@ public class HttpClientConfig {
     }
 
     @Bean
-    HttpClient jdkHttpClient(ExecutorService httpClientExecutor) {
+    HttpClient jdkHttpClient(
+            ExecutorService httpClientExecutor,
+            HttpClientProperties properties) {
         return HttpClient.newBuilder()
                 .executor(httpClientExecutor)
-                .connectTimeout(Duration.ofMillis(500))
+                .connectTimeout(properties.connectTimeout())
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
     }
 
     @Bean
-    JdkClientHttpRequestFactory jdkClientHttpRequestFactory(HttpClient httpClient) {
+    JdkClientHttpRequestFactory jdkClientHttpRequestFactory(
+            HttpClient httpClient,
+            HttpClientProperties properties) {
         var requestFactory = new JdkClientHttpRequestFactory(httpClient);
-        requestFactory.setReadTimeout(Duration.ofSeconds(1));
+        requestFactory.setReadTimeout(properties.readTimeout());
         return requestFactory;
     }
 
