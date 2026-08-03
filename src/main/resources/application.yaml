@@ -13,6 +13,10 @@ server:
 concurrency:
   target: ${TARGET_CONCURRENCY:2000}
 
+http-client:
+  connect-timeout: ${HTTP_CLIENT_CONNECT_TIMEOUT:500ms}
+  read-timeout: ${HTTP_CLIENT_READ_TIMEOUT:1s}
+
 management:
   endpoints:
     web:
