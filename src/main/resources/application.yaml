@@ -18,6 +18,8 @@ http-client:
   read-timeout: ${HTTP_CLIENT_READ_TIMEOUT:1s}
 
 management:
+  server:
+    port: 8090
   endpoints:
     web:
       exposure:
