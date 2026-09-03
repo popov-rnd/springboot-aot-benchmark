@@ -24,7 +24,6 @@ public class HighLoadController {
         this.externalClient = externalClient;
     }
 
-    //---------------------Servlet-level concurrency limits-----------------------
 
     @GetMapping("critical")
     @ResponseStatus(HttpStatus.OK)
