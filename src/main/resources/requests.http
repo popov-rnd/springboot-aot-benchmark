@@ -3,3 +3,6 @@ GET http://localhost:8080/critical
 
 ### Downstream path test
 GET http://localhost:8081/delay
+
+### Metrics
+GET http://localhost:8090/actuator/prometheus
