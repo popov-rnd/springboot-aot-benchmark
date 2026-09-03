@@ -21,6 +21,7 @@ public class GlobalExceptionHandler {
     public void handleDownstreamConcurrencyLimit(HttpClientErrorException.TooManyRequests exception) {
         log.warn("Too many requests exception, message = {}", exception.getMessage());
     }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Void> handleAllOtherExceptions(Exception exception) {
 

@@ -15,9 +15,7 @@ Spring Boot application (:8080)
     |
     | GET /delayed
     v
-downstream service (:8081)
-[mvnw.cmd](mvnw.cmd)    |-- admitted request --> delayed work (~500 ms)
-    `-- shed request -----> HTTP 429
+Downstream Go-based service (:8081)
 ```
 
 The Spring Boot application maps a downstream `429 Too Many Requests` response to `503 Service Unavailable` for its caller. This makes shed requests visible as unavailable work rather than successful goodput.
@@ -28,12 +26,12 @@ Under offered load above the downstream service's sustainable capacity, acceptin
 
 Downstream load shedding rejects excess work close to the constrained resource. The benchmark is intended to compare:
 
-- **Goodput**: successful requests completed within the chosen latency objective, not merely total throughput.
-- **Latency**: especially tail latency for admitted requests.
-- **Rejected load**: downstream `429` responses, exposed to callers as `503` responses.
+- **Goodput**: successful requests completed within the chosen latency objective.
+- **Latency**: especially tail latency (p99) for admitted requests.
 - **Resource usage**: CPU, memory, active requests, connections, and virtual-thread activity under sustained overload.
+- **Allocation & GC activity**: allocation rate and GC pauses (cumulative during the test run).
 
-The expected result is deliberate rejection once downstream capacity is exhausted, while admitted traffic continues to complete predictably and resource consumption remains bounded.
+Expected result: downstream shedding should protect the constrained dependency, but it is expected to protect the Spring application less effectively than application- or server-level admission control because rejected requests still consume ingress and outbound-client resources.
 
 ## Scope
 
@@ -50,31 +48,13 @@ This distinction matters: the application may still spend resources accepting a 
 
 - JDK 25
 - A downstream service listening on `127.0.0.1:8081`
-- The downstream service must expose `GET /delayed`, with an approximate service time of 500 ms
+- The downstream service must expose `GET /delay`, with an approximate service time of 200 ms
 - To exercise shedding, the downstream service must return `429 Too Many Requests` when its concurrency or capacity limit is reached
 - A load generator capable of driving `GET http://localhost:8080/critical` above the downstream service's sustainable rate
 
 ## Run
 
-Start the downstream service first, then run this application:
-
-```bash
-./mvnw spring-boot:run
-```
-
-The application listens on port `8080`. A single request can be sent with:
-
-```bash
-curl -i http://localhost:8080/critical
-```
-
-Expected responses:
-
-- `200 OK` when the downstream service admits and completes the request.
-- `503 Service Unavailable` when the downstream service sheds the request with `429 Too Many Requests`.
-
-The outbound connection and read timeouts are both two seconds. Keep the load generator's timeout and the benchmark latency objective explicit when interpreting results.
-
+Start the downstream service first, then run this application.
 
 ## Build
 
@@ -106,6 +86,27 @@ See more at [docs](https://docs.spring.io/spring-boot/maven-plugin/build-image.h
 
 *Paketo* explicitly states as default JVM provider:
 
-- The Java Buildpack uses the ***BellSoft Liberica*** impl-s of the JRE and JDK. JVM installation is handled by the BellSoft Liberica Buildpack. The JDK will be installed in the build container but only the JRE will be contributed to the application image.
+- The Java Buildpack uses the ***BellSoft Liberica*** impl-s of the JRE and JDK. JVM installation is handled by the BellSoft Liberica Buildpack. The JDK will be installed in the build container, but only the JRE will be contributed to the application image.
 
 See more at: [docs](https://paketo.io/docs/reference/java-reference)
+
+### Run docker image
+
+Run the Spring Boot application in Docker:
+
+```bash
+docker run -d \
+  --name spring-load-shedding \
+  --network host \
+  --cpuset-cpus="1,2" \
+  --memory=2G \
+  -e MAX_CONNECTIONS="${MAX_CONNECTIONS}" \
+  -e HTTP_CLIENT_CONNECT_TIMEOUT="100ms" \
+  -e HTTP_CLIENT_READ_TIMEOUT="500ms" \
+  -e LOG_LEVEL_BENCHMARK="ERROR" \
+  "${IMAGE}"
+```
+
+## Exercise the systems under open-loop
+
+An approximate k6 script used for the benchmark is available in this repository [branch](https://github.com/popov-rnd/scripted-benchmarks/tree/load-shedding).

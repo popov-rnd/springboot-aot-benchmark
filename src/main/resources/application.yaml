@@ -8,11 +8,11 @@ server:
   port: 8080
   tomcat:
     accept-count: ${ACCEPT_COUNT:100}
-    max-connections: ${MAX_CONNECTIONS:8192}
+    max-connections: ${MAX_CONNECTIONS:10000}
 
 http-client:
-  connect-timeout: ${HTTP_CLIENT_CONNECT_TIMEOUT:500ms}
-  read-timeout: ${HTTP_CLIENT_READ_TIMEOUT:1s}
+  connect-timeout: ${HTTP_CLIENT_CONNECT_TIMEOUT:100ms}
+  read-timeout: ${HTTP_CLIENT_READ_TIMEOUT:500ms}
 
 management:
   endpoints:
@@ -23,4 +23,4 @@ management:
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
-    com.popovrnd.springbenchmark: ${LOG_LEVEL_BENCHMARK:WARN}
+    com.popovrnd.springbenchmark: ${LOG_LEVEL_BENCHMARK:ERROR}
